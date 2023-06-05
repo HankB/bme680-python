@@ -2,7 +2,7 @@
 
 import bme680
 import time
-
+import json
 
 try:
     sensor = bme680.BME680(bme680.I2C_ADDR_PRIMARY)
@@ -38,10 +38,19 @@ while not (sensor.get_sensor_data() and sensor.data.heat_stable):
     if repeat_count > 5:
         print("sensor.get_sensor_data() unsuccessful")
         exit(1)
-output = '{0:.2f} °C,{1:.2f} hPa,{2:.2f} %RH {3:.0f} Ohms'.format(
+
+'''
+output = '{0:.2f} °C,{1:.2f} hPa,{2:.2f} %RH {3:.2f} Ohms'.format(
     sensor.data.temperature,
     sensor.data.pressure,
     sensor.data.humidity,
     sensor.data.gas_resistance)
-
 print(output)
+'''
+timeStamp = int(time.time())
+payload_json = json.dumps({ "t": timeStamp, 
+                            "temp":round(sensor.data.temperature/5.0*9.0+32.0, 1),
+                            "pressure":round(sensor.data.pressure, 2),
+                            "humidity":round(sensor.data.humidity, 2),
+                            "VOC_R":int(sensor.data.gas_resistance+0.5)})
+print(payload_json)
