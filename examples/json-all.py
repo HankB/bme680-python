@@ -52,5 +52,6 @@ payload_json = json.dumps({ "t": timeStamp,
                             "temp":round(sensor.data.temperature/5.0*9.0+32.0, 1),
                             "pressure":round(sensor.data.pressure, 2),
                             "humidity":round(sensor.data.humidity, 2),
-                            "VOC_R":int(sensor.data.gas_resistance+0.5)})
+                            "VOC_R":int(sensor.data.gas_resistance+0.5),
+                            "repeats:":repeat_count})
 print(payload_json)
