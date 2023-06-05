@@ -27,23 +27,22 @@ sensor.select_gas_heater_profile(0)
 # with their own temperature and duration.
 # sensor.set_gas_heater_profile(200, 150, nb_profile=1)
 # sensor.select_gas_heater_profile(1)
-sensor.get_sensor_data() # prime sensor
-time.sleep(0.1)
-sensor.get_sensor_data() # prime sensor
-time.sleep(0.1)
-if sensor.get_sensor_data():
-    output = '{0:.2f} C,{1:.2f} hPa,{2:.2f} %RH'.format(
-        sensor.data.temperature,
-        sensor.data.pressure,
-        sensor.data.humidity)
+# sensor.get_sensor_data() # prime sensor
+# time.sleep(0.1)
+# sensor.get_sensor_data() # prime sensor
+# time.sleep(0.1)
+repeat_count=0
+while not (sensor.get_sensor_data() and sensor.data.heat_stable):
+    time.sleep(0.1)
+    repeat_count += 1
+    if repeat_count > 5:
+        print("sensor.get_sensor_data() unsuccessful")
+        exit(1)
+output = '{0:.2f} C,{1:.2f} hPa,{2:.2f} %RH'.format(
+    sensor.data.temperature,
+    sensor.data.pressure,
+    sensor.data.humidity)
 
-    if sensor.data.heat_stable:
-        print('{0},{1} Ohms'.format(
-            output,
-            sensor.data.gas_resistance))
-
-    else:
-        print(output)
-else:
-    print("sensor.get_sensor_data() unsuccessful")
-
+print('{0},{1} Ohms'.format(
+    output,
+    sensor.data.gas_resistance))
