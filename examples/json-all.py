@@ -38,11 +38,10 @@ while not (sensor.get_sensor_data() and sensor.data.heat_stable):
     if repeat_count > 5:
         print("sensor.get_sensor_data() unsuccessful")
         exit(1)
-output = '{0:.2f} C,{1:.2f} hPa,{2:.2f} %RH'.format(
+output = '{0:.2f} °C,{1:.2f} hPa,{2:.2f} %RH {3:.0f} Ohms'.format(
     sensor.data.temperature,
     sensor.data.pressure,
-    sensor.data.humidity)
+    sensor.data.humidity,
+    sensor.data.gas_resistance)
 
-print('{0},{1} Ohms'.format(
-    output,
-    sensor.data.gas_resistance))
+print(output)
