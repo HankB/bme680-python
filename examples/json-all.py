@@ -1,4 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+
+'''
+Script intended to read the BME680 and output the results in
+JSON format in order to publish to my personal Homeassistant
+setup. A typical command line would be:
+
+json-all.sh | mosquitto_pub -l -h mqtt -t "HA/"$(/usr/bin/hostname)"/kitchen/temp_humidity_press_VOC"
+
+Left as an exercise for the student to add to cron.
+
+TODO: Add instrictions for installation w/out running the Pimoroni install script.
+'''
 
 import bme680
 import time
